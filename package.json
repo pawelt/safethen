@@ -1,0 +1,11 @@
+{
+  "name": "safethen",
+  "version": "1.0.0",
+  "description": "Functional wrappers for try/catch",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pawel Turlejski",
+  "license": "MIT"
+}
