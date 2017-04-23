@@ -49,6 +49,6 @@ function safeThen(asyncFunc, defaultValue) {
 };
 
 module.exports = {
-    safe,
-    safeThen,
+    safe: safe,
+    safeThen: safeThen,
 };
