@@ -43,9 +43,9 @@ function safe(syncFunc, defaultValue) {
  */
 function safeThen(asyncFunc, defaultValue) {
     return Promise.resolve()
-        .then(_ => asyncFunc())
-        .then(result => result !== void 0 ? result : defaultValue)
-        .catch(_ => defaultValue);
+        .then(asyncFunc)
+        .then(function (result) { return result !== void 0 ? result : defaultValue; })
+        .catch(function () { return defaultValue; });
 };
 
 module.exports = {
