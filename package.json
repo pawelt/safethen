@@ -7,6 +7,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "try",
+    "catch",
+    "nothrow",
+    "asynchronous",
+    "safe get",
+    "nested object"
+  ],
   "author": "Pawel Turlejski",
   "license": "MIT"
 }
