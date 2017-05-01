@@ -5,6 +5,10 @@ Function wrappers for synchronous and asynchronous try/catch.
 
 This tiny package provides two functions that let you write less error checking code. Useful for handling `MongoDB` documents, `DOM` nodes etc.
 
+```js
+const { safe, safeThen } = require('safethen');
+```
+
 ### safe() - synchronous code
 
 ```js
@@ -15,12 +19,21 @@ This tiny package provides two functions that let you write less error checking 
  * @param {any}      [defaultValue]
  * @returns {any}    result of `syncFunc()` call or `defaultValue`
  */
-function safe(syncFunc, defaultValue)
+function safe(syncFunc, defaultValue) {
+    try {
+        const value = syncFunc();
+        return value !== void 0 ? value : defaultValue;
+    } catch (ex) {
+        return defaultValue;
+    }
+}
 ```
 
 Use in synchronous code, for ex.:
 
 ```js
+const { safe } = require('safethen');
+
 // a random nested objects
 const obj = { a: { } };
 
@@ -47,12 +60,19 @@ const valueOrDefault = safe(_ => 1 < 2 && obj.a.b.c, 'some default');
  * @param {any}       [defaultValue]
  * @returns {Promise} resolved with the `asyncFunc()` result or `defaultValue`
  */
-function safeThen(syncFunc, defaultValue)
+function safeThen(asyncFunc, defaultValue) {
+    return Promise.resolve()
+        .then(asyncFunc)
+        .then(function (value) { return value !== void 0 ? value : defaultValue; })
+        .catch(function () { return defaultValue; });
+}
 ```
 
 Use in asynchronous code. Wrapped for ex.:
 
 ```js
+const { safeThen } = require('safethen');
+
 const obj = { a: { b: { c: true }} };
 
 // value === 123

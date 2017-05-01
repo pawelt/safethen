@@ -20,12 +20,12 @@
  */
 function safe(syncFunc, defaultValue) {
     try {
-        const result = syncFunc();
-        return result !== void 0 ? result : defaultValue;
+        const value = syncFunc();
+        return value !== void 0 ? value : defaultValue;
     } catch (ex) {
         return defaultValue;
     }
-};
+}
 /**
  * Promise-safe version of safe.
  * `asyncFunc` function can fail synchronously (throw an error)
@@ -45,9 +45,9 @@ function safe(syncFunc, defaultValue) {
 function safeThen(asyncFunc, defaultValue) {
     return Promise.resolve()
         .then(asyncFunc)
-        .then(function (result) { return result !== void 0 ? result : defaultValue; })
+        .then(function (value) { return value !== void 0 ? value : defaultValue; })
         .catch(function () { return defaultValue; });
-};
+}
 
 module.exports = {
     safe: safe,
