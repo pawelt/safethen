@@ -9,27 +9,7 @@ This tiny package provides two functions that let you write less error checking 
 const { safe, safeThen } = require('safethen');
 ```
 
-### safe() - synchronous code
-
-```js
-/**
- * safe
- *
- * @param {function} syncFunc       function exectued inside try/catch block
- * @param {any}      [defaultValue]
- * @returns {any}    result of `syncFunc()` call or `defaultValue`
- */
-function safe(syncFunc, defaultValue) {
-    try {
-        const value = syncFunc();
-        return value !== void 0 ? value : defaultValue;
-    } catch (ex) {
-        return defaultValue;
-    }
-}
-```
-
-Use in synchronous code, for ex.:
+## safe() - use in synchronous code
 
 ```js
 const { safe } = require('safethen');
@@ -50,26 +30,7 @@ const valueOrDefault = safe(_ => obj.a.b.c, 'some default');
 const valueOrDefault = safe(_ => 1 < 2 && obj.a.b.c, 'some default');
 ```
 
-### safeThen() - promises
-
-```js
-/**
- * safeThen
- *
- * @param {function}  asyncFunc      function executed in a Promise context
- * @param {any}       [defaultValue]
- * @returns {Promise} resolved with the `asyncFunc()` result or `defaultValue`
- */
-function safeThen(asyncFunc, defaultValue) {
-    return Promise.resolve()
-        .then(asyncFunc)
-        .then(function (value) { return value !== void 0 ? value : defaultValue; })
-        .catch(function () { return defaultValue; });
-}
-```
-
-Use in asynchronous code. Wrapped for ex.:
-
+## safeThen() - use with promises
 ```js
 const { safeThen } = require('safethen');
 
@@ -95,3 +56,37 @@ safeThen(_ => blowUp())
     .catch(err => console.log('this is never logged');
 ```
 
+
+## Source
+
+```js
+/**
+ * safe
+ *
+ * @param {function} syncFunc       function exectued inside try/catch block
+ * @param {any}      [defaultValue]
+ * @returns {any}    result of `syncFunc()` call or `defaultValue`
+ */
+function safe(syncFunc, defaultValue) {
+    try {
+        const value = syncFunc();
+        return value !== void 0 ? value : defaultValue;
+    } catch (ex) {
+        return defaultValue;
+    }
+}
+
+/**
+ * safeThen
+ *
+ * @param {function}  asyncFunc      function executed in a Promise context
+ * @param {any}       [defaultValue]
+ * @returns {Promise} resolved with the `asyncFunc()` result or `defaultValue`
+ */
+function safeThen(asyncFunc, defaultValue) {
+    return Promise.resolve()
+        .then(asyncFunc)
+        .then(function (value) { return value !== void 0 ? value : defaultValue; })
+        .catch(function () { return defaultValue; });
+}
+```
