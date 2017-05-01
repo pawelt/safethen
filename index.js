@@ -13,9 +13,10 @@
  *     // if you don't want undefined
  *     const valueOrDefault = safe(_ => nestedObject.a.b.c.d, 'some default');
  * </pre>
- * @param {function} syncFunc
- * @param {any} [defaultValue]
- * @returns {string}
+ *
+ * @param {function} syncFunc       function exectued inside try/catch block
+ * @param {any}      [defaultValue]
+ * @returns {any}    result of `syncFunc()` call or `defaultValue`
  */
 function safe(syncFunc, defaultValue) {
     try {
@@ -27,8 +28,8 @@ function safe(syncFunc, defaultValue) {
 };
 /**
  * Promise-safe version of safe.
- * `asyncFunc` function can fail synchronously (throw an error) 
- * asynchronously (return a rejected promise).
+ * `asyncFunc` function can fail synchronously (throw an error)
+ * or asynchronously (return a rejected promise).
  *
  * <pre>
  *     safeThen(_ => blow.up.here, 123)
@@ -37,9 +38,9 @@ function safe(syncFunc, defaultValue) {
  *         .then(value => ...); // value == resolved ajax result or 123
  * </pre>
  *
- * @param {funciton} asyncFunc
- * @param {any} defaultValue
- * @returns {Promise}
+ * @param {function}  asyncFunc      function executed in a Promise context
+ * @param {any}       [defaultValue]
+ * @returns {Promise} resolved with the `asyncFunc()` result or `defaultValue`
  */
 function safeThen(asyncFunc, defaultValue) {
     return Promise.resolve()
