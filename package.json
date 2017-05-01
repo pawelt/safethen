@@ -1,6 +1,6 @@
 {
   "name": "safethen",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Functional wrappers for try/catch",
   "main": "index.js",
   "repository": "https://github.com/pawelt/safethen",
