@@ -28,6 +28,22 @@ const valueOrDefault = safe(_ => obj.a.b.c, 'some default');
 // wrap any logic in safe()
 // valueOrUndefined === 'some default'
 const valueOrDefault = safe(_ => 1 < 2 && obj.a.b.c, 'some default');
+
+
+// if-like conditions in promise chains
+Promise.resolve(false)
+    .then(x => safe(_ => { if (!x) throw 'boom'; }, 'phew!'))
+    .then(console.log); // logs 'phew!'
+
+// vanila promises version
+Promise.resolve(false)
+    .then(x => Promise.resolve()
+        // this then/catch nesting is necessary, as don't want to
+        // swallow outer errors
+        .then(_ => { if (!x) throw 'boom'; })
+        .catch(_ => 'phew!');
+    )
+    .then(console.log); // logs 'phew!'
 ```
 
 ## safeThen() - use with promises
